@@ -4,7 +4,7 @@ import { Table, Pagination, Popconfirm, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { routerRedux } from 'dva/router';
 import queryString from 'query-string';
-import styles from './Users.css';
+import styles from './Users.less';
 import { PAGE_SIZE } from '../../constants';
 import UserModal from './UserModal';
 

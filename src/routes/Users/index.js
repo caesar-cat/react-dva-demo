@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Row, Col } from 'antd';
-import styles from './Users.css';
-import UsersComponent from '../components/Users/Users';
-import PageHeaderLayout from '../layouts/PageHeaderLayout';
+import UsersComponent from '../../components/Users/Users';
+import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 @connect(state => ({
   loading: state.loading.models.users,

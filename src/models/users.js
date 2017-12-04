@@ -45,7 +45,6 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, search }) => {
-        console.log(pathname)
         const query = queryString.parse(search);
         if (pathname === '/users/list') {
           dispatch({ type: 'fetch', payload: query });

@@ -24,3 +24,7 @@ export function create(values) {
     body: JSON.stringify(values),
   });
 }
+
+export function queryCurrent() {
+  return request('/api/currentUser');
+}

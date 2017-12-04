@@ -8,6 +8,9 @@ import Debounce from 'lodash-decorators/debounce';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import styles from './BasicLayout.less';
+import NotFound from '../routes/Exception/404';
+import PageFooter from '../components/PageFooter'
+import HeaderSearch from '../components/HeaderSearch'
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -35,7 +38,8 @@ const query = {
 };
 
 @connect(state => ({
-  collapsed: state.global.collapsed
+  collapsed: state.global.collapsed,
+  currentUser: state.auth.currentUser  
 }))
 
 export default class BasicLayout extends React.PureComponent {
@@ -67,11 +71,10 @@ export default class BasicLayout extends React.PureComponent {
     return { location, breadcrumbNameMap };
   }
 
-  //组件挂载完成后请求数据
+  //获取当前用户
   componentDidMount() {
     this.props.dispatch({
-      type: 'users/fetch',
-      payload: { page: 1 }
+      type: 'auth/fetchCurrentUser'
     });
   }
 
@@ -84,6 +87,14 @@ export default class BasicLayout extends React.PureComponent {
       type: 'global/changeLayoutCollapsed',
       payload: collapsed,
     });
+  }
+
+  onMenuClick = ({ key }) => {
+    if (key === 'logout') {
+      this.props.dispatch({
+        type: 'login/logout',
+      });
+    }
   }
 
   getMenuData = (data, parentPath) => {
@@ -176,7 +187,7 @@ export default class BasicLayout extends React.PureComponent {
     let title = 'XXX中后台系统';
     getRouteData('BasicLayout').forEach((item) => {
       if (item.path === pathname) {
-        title = `${item.name} - Ant Design Pro`;
+        title = `${item.name} - Ant Design`;
       }
     });
     return title;
@@ -206,7 +217,7 @@ export default class BasicLayout extends React.PureComponent {
   }
 
   render() {
-    const { collapsed, getRouteData } = this.props;
+    const { collapsed, currentUser, getRouteData } = this.props;
 
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
@@ -256,6 +267,27 @@ export default class BasicLayout extends React.PureComponent {
               type={collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
             />
+            <div className={styles.right}>
+              <HeaderSearch
+                className={`${styles.action} ${styles.search}`}
+                placeholder="站内搜索"
+                dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
+                onSearch={(value) => {
+                  console.log('input', value); // eslint-disable-line
+                }}
+                onPressEnter={(value) => {
+                  console.log('enter', value); // eslint-disable-line
+                }}
+              />
+              {currentUser.name ? (
+                <Dropdown overlay={menu}>
+                  <span className={`${styles.action} ${styles.account}`}>
+                    <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
+                    {currentUser.name}
+                  </span>
+                </Dropdown>
+              ) : <Spin size="small" style={{ marginLeft: 8 }} />}
+            </div>
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
             <div style={{ minHeight: 'calc(100vh - 260px)' }}>
@@ -273,9 +305,25 @@ export default class BasicLayout extends React.PureComponent {
                   )
                 }
                 <Redirect exact from="/" to="/users/list" />
-
+                <Route component={NotFound} />
               </Switch>
             </div>
+            <PageFooter
+              links={[{
+                title: 'XXX 首页',
+                href: '/',
+                blankTarget: true,
+              }, {
+                title: 'XXX 地址',
+                href: '/',
+                blankTarget: true,
+              }]}
+              copyright={
+                <div>
+                  Copyright <Icon type="copyright" /> XXX 公司出品
+                </div>
+              }
+          />
           </Content>
         </Layout>
       </Layout>
