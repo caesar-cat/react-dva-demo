@@ -11,6 +11,7 @@
   "extraBabelPlugins": [
     ["import", { "libraryName": "antd", "style": true }]
   ],
+  "multipage": true,
   "env": {
     "development": {
       "extraBabelPlugins": [

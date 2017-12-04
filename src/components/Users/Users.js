@@ -1,19 +1,22 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Table, Pagination, Popconfirm, Button } from 'antd';
+import PropTypes from 'prop-types';
 import { routerRedux } from 'dva/router';
 import queryString from 'query-string';
 import styles from './Users.css';
 import { PAGE_SIZE } from '../../constants';
 import UserModal from './UserModal';
 
-@connect((state) => ({
-  loading: state.loading.models.users,
-  list: state.users.list,
-  total: state.users.total,
-  page: state.users.page,
-}))
 export default class Users extends React.Component{
+
+  static propTypes = {
+    loading: PropTypes.bool,
+    list: PropTypes.array,
+    total: PropTypes.number,
+    page: PropTypes.number
+  }
+  
   constructor(props) {
     super(props)
     this.dispatch =  this.props.dispatch
@@ -35,7 +38,7 @@ export default class Users extends React.Component{
 
   pageChangeHandler(page) {
     this.dispatch(routerRedux.push({
-      pathname: '/users',
+      pathname: '/users/list',
       search: queryString.stringify({ page }),
     }));
   }

@@ -15,14 +15,12 @@ export default {
   },
   effects: {
     *fetch({ payload: { page = 1 } }, { call, put }) {
-      var obj = yield call(usersService.fetch, { page })
-      console.log(obj)
-      const { data, headers } = yield call(usersService.fetch, { page });
+      const data = yield call(usersService.fetch, { page });
       yield put({
         type: 'save',
         payload: {
           data,
-          total: parseInt(headers['x-total-count'], 10),
+          total: 10,
           page: parseInt(page, 10),
         },
       });
@@ -47,8 +45,9 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, search }) => {
+        console.log(pathname)
         const query = queryString.parse(search);
-        if (pathname === '/users') {
+        if (pathname === '/users/list') {
           dispatch({ type: 'fetch', payload: query });
         }
       });

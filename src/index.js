@@ -18,7 +18,7 @@ const app = dva({
 app.use(createLoading());
 
 // 3. Model
-// Moved to router.js
+app.model(require('./models/global'));
 
 // 4. Router
 app.router(require('./router'));
