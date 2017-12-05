@@ -11,6 +11,7 @@
     "classnames": "^2.2.5",
     "dva": "^2.1.0",
     "dva-loading": "^0.3.0",
+    "g2": "^2.3.13",
     "history": "^4.7.2",
     "lodash": "^4.17.4",
     "lodash-decorators": "^4.5.0",
@@ -19,7 +20,8 @@
     "react": "^16.0.0",
     "react-container-query": "^0.9.1",
     "react-document-title": "^2.0.3",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "viser-react": "^1.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

@@ -113,7 +113,7 @@ export default class BasicLayout extends React.PureComponent {
     const currentMenuSelectedKeys = [...this.getCurrentMenuSelectedKeys(props)];
     currentMenuSelectedKeys.splice(-1, 1);
     if (currentMenuSelectedKeys.length === 0) {
-      return ['user'];
+      return ['users'];
     }
     return currentMenuSelectedKeys;
   }
@@ -218,7 +218,6 @@ export default class BasicLayout extends React.PureComponent {
 
   render() {
     const { collapsed, currentUser, getRouteData } = this.props;
-
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
         <Menu.Item disabled><Icon type="user" />个人中心</Menu.Item>
@@ -234,7 +233,7 @@ export default class BasicLayout extends React.PureComponent {
     };
 
     const layout = (
-      <Layout>
+      <Layout className={styles.layout}>
         <Sider
           trigger={null}
           collapsible
@@ -308,6 +307,7 @@ export default class BasicLayout extends React.PureComponent {
                 <Route component={NotFound} />
               </Switch>
             </div>
+            {/*
             <PageFooter
               links={[{
                 title: 'XXX 首页',
@@ -324,6 +324,7 @@ export default class BasicLayout extends React.PureComponent {
                 </div>
               }
           />
+          */}
           </Content>
         </Layout>
       </Layout>

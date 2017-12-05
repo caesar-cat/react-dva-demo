@@ -23,11 +23,31 @@ export const getNavData = app => [
           {
             name: '用户列表',
             path: 'list',
+            icon: 'user',
             component: dynamicWrapper(app, ['users'], () => import('../routes/Users/index')),
           }
-        ],
+        ]
+      },
+      {
+        name: '图表',
+        icon: 'dashboard',
+        path: 'analysis',
+        children: [
+          {
+            name: '饼图',
+            path: 'circle',
+            icon: 'dislike',
+            component: dynamicWrapper(app, [], () => import('../routes/Analysis/circle'))
+          },
+          {
+            name: '柱状图',
+            path: 'column',
+            icon: 'eye',
+            component: dynamicWrapper(app, [], () => import('../routes/Analysis/column'))
+          }
+        ]
       }
-    ],
+    ]
   },
 
   {
@@ -37,26 +57,17 @@ export const getNavData = app => [
     children: [
       {
         name: '帐户',
-        icon: 'user',
+        icon: 'setting',
         path: 'user',
         children: [
           {
             name: '登录',
             path: 'login',
+            icon: 'global',
             component: dynamicWrapper(app, ['login'], () => import('../routes/User/Login')),
-          },
-          // {
-          //   name: '注册',
-          //   path: 'register',
-          //   component: dynamicWrapper(app, ['register'], () => import('../routes/User/Register')),
-          // },
-          // {
-          //   name: '注册结果',
-          //   path: 'register-result',
-          //   component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
-          // },
-        ],
-      },
-    ],
+          }
+        ]
+      }
+    ]
   }
 ];
